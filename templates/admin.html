@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Manage Marks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Student Result System</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link active" href="/admin">Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-container">
+                    <h2 class="text-center mb-4">Manage Student Marks</h2>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    
+                    <div class="mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Reset Student Marks</h5>
+                                <form action="/admin/reset" method="POST" class="mb-3">
+                                    <div class="mb-3">
+                                        <label for="reset_student_name" class="form-label">Student Name</label>
+                                        <input type="text" class="form-control" id="reset_student_name" name="student_name" required>
+                                        <div class="invalid-feedback">Please enter student name</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="reset_class_level" class="form-label">Class</label>
+                                        <select class="form-select" id="reset_class_level" name="class_level" required>
+                                            <option value="">Select Class</option>
+                                            <option value="Nursery">Nursery</option>
+                                            <option value="LKG">LKG</option>
+                                            <option value="UKG">UKG</option>
+                                            {% for i in range(1, 9) %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <div class="invalid-feedback">Please select a class</div>
+                                    </div>
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to reset marks for this student? This action cannot be undone.')">
+                                        Reset Marks
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Add/Update Marks</h5>
+                                <form action="/admin/add" method="POST" class="needs-validation" novalidate>
+                                    <div class="mb-3">
+                                        <label for="student_name" class="form-label">Student Name</label>
+                                        <input type="text" class="form-control" id="student_name" name="student_name" required>
+                                        <div class="invalid-feedback">Please enter student name</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="class_level" class="form-label">Class</label>
+                                        <select class="form-select" id="class_level" name="class_level" required>
+                                            <option value="">Select Class</option>
+                                            <option value="Nursery">Nursery</option>
+                                            <option value="LKG">LKG</option>
+                                            <option value="UKG">UKG</option>
+                                            {% for i in range(1, 9) %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <div class="invalid-feedback">Please select a class</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="subject-group">
+                                                <label class="subject-label">Nepali</label>
+                                                <input type="number" class="marks-input" name="Nepali" min="0" max="100">
+                                            </div>
+                                            <div class="subject-group">
+                                                <label class="subject-label">Social</label>
+                                                <input type="number" class="marks-input" name="Social" min="0" max="100">
+                                            </div>
+                                            <div class="subject-group">
+                                                <label class="subject-label">Maths</label>
+                                                <input type="number" class="marks-input" name="Maths" min="0" max="100">
+                                            </div>
+                                            <div class="subject-group">
+                                                <label class="subject-label">Science</label>
+                                                <input type="number" class="marks-input" name="Science" min="0" max="100">
+                                            </div>
+                                            <div class="subject-group">
+                                                <label class="subject-label">Wonder</label>
+                                                <input type="number" class="marks-input" name="Wonder" min="0" max="100">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="subject-group">
+                                                <label class="subject-label">Computer</label>
+                                                <input type="number" class="marks-input" name="Computer" min="0" max="100">
+                                            </div>
+                                            <div class="subject-group">
+                                                <label class="subject-label">Health</label>
+                                                <input type="number" class="marks-input" name="Health" min="0" max="100">
+                                            </div>
+                                            <div class="subject-group">
+                                                <label class="subject-label">Reader</label>
+                                                <input type="number" class="marks-input" name="Reader" min="0" max="100">
+                                            </div>
+                                            <div class="subject-group">
+                                                <label class="subject-label">Serophero</label>
+                                                <input type="number" class="marks-input" name="Serophero" min="0" max="100">
+                                            </div>
+                                            <div class="subject-group">
+                                                <label class="subject-label">GK</label>
+                                                <input type="number" class="marks-input" name="GK" min="0" max="100">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center mt-4">
+                                        <button type="submit" class="btn btn-primary">Save Marks</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
